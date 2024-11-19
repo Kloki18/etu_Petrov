@@ -18,5 +18,8 @@
     <ClCompile Include="ИДЗ 1 доп прога.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Kalebdar\Kalebdar.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
