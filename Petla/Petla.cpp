@@ -1281,227 +1281,515 @@
 
 
 
+#include <iostream>
+#include <conio.h> 
+#include <stdbool.h> 
+#include <locale.h> 
+int i = 0, j = 0;
 
-
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#define _CRT_SECURE_NO_WARNINGS
-#include <locale.h>
-
-void fillSpiral(long long n, long long m, long long** array) {
-    long long num = 1;
-    long long top = 0, bottom = n - 1;
-    long long left = 0, right = m - 1;
-
-    while (top <= bottom && left <= right) {
-        // Заполняем верхнюю строку слева направо
-        for (long long i = left; i <= right; i++) {
-            array[top][i] = num++;
-        }
-        top++;
-
-        // Заполняем правый столбец сверху вниз
-        for (long long i = top; i <= bottom; i++) {
-            array[i][right] = num++;
-        }
-        right--;
-
-        // Заполняем нижнюю строку справа налево
-        if (top <= bottom) {
-            for (long long i = right; i >= left; i--) {
-                array[bottom][i] = num++;
-            }
-            bottom--;
-        }
-
-        // Заполняем левый столбец снизу вверх
-        if (left <= right) {
-            for (long long i = bottom; i >= top; i--) {
-                array[i][left] = num++;
-            }
-            left++;
-        }
-    }
-}
-
-void fillSpiralFromTopRight(long long n, long long m, long long** array) {
-    long long num = 1;
-    long long top = 0, bottom = n - 1;
-    long long left = 0, right = m - 1;
-
-    while (top <= bottom && left <= right) {
-        // Заполняем верхний ряд справа налево
-        for (long long i = right; i >= left; i--) {
-            array[top][i] = num++;
-        }
-        top++;
-
-        // Заполняем левый столбец сверху вниз
-        for (long long i = top; i <= bottom; i++) {
-            array[i][left] = num++;
-        }
-        left++;
-
-        // Заполняем нижний ряд слева направо
-        if (top <= bottom) {
-            for (long long i = left; i <= right; i++) {
-                array[bottom][i] = num++;
-            }
-            bottom--;
-        }
-
-        // Заполняем правый столбец снизу вверх
-        if (left <= right) {
-            for (long long i = bottom; i >= top; i--) {
-                array[i][right] = num++;
-            }
-            right--;
-        }
-    }
-}
-
-void fillSpiralFromCenter(long long n, long long m, long long** array) {
-    long long num = 1;
-    long long x = n / 2;
-    long long y = m / 2;
-
-    if (n % 2 == 0) x -= 1;
-    if (m % 2 == 0) y -= 1;
-
-    long long layer = 0;
-    array[x][y] = num++;
-
-    while (layer < (n + m) / 2) {
-        // Двигаемся вправо
-        for (long long i = 1; i <= layer * 2 + 1 && y + 1 < m && num <= n * m; i++) {
-            array[x][++y] = num++;
-        }
-
-        // Двигаемся вниз
-        for (long long i = 1; i <= layer * 2 + 1 && x + 1 < n && num <= n * m; i++) {
-            array[++x][y] = num++;
-        }
-
-        // Двигаемся влево
-        for (long long i = 1; i <= layer * 2 + 2 && y - 1 >= 0 && num <= n * m; i++) {
-            array[x][--y] = num++;
-        }
-
-        // Двигаемся вверх
-        for (long long i = 1; i <= layer * 2 + 2 && x - 1 >= 0 && num <= n * m; i++) {
-            array[--x][y] = num++;
-        }
-
-        layer++;
-    }
-}
-
-void fillSpiralFromCenterCounterClockwise(long long n, long long m, long long** array) {
-    long long num = 1;
-    long long x = n / 2;
-    long long y = m / 2;
-
-    if (n % 2 == 0) x -= 1;
-    if (m % 2 == 0) y -= 1;
-
-    long long layer = 0;
-    array[x][y] = num++;
-
-    while (layer < (n + m) / 2) {
-        // Двигаемся влево
-        for (long long i = 1; i <= layer * 2 + 1 && y - 1 >= 0 && num <= n * m; i++) {
-            array[x][--y] = num++;
-        }
-
-        // Двигаемся вверх
-        for (long long i = 1; i <= layer * 2 + 1 && x - 1 >= 0 && num <= n * m; i++) {
-            array[--x][y] = num++;
-        }
-
-        // Двигаемся вправо
-        for (long long i = 1; i <= layer * 2 + 2 && y + 1 < m && num <= n * m; i++) {
-            array[x][++y] = num++;
-        }
-
-        // Двигаемся вниз
-        for (long long i = 1; i <= layer * 2 + 2 && x + 1 < n && num <= n * m; i++) {
-            array[++x][y] = num++;
-        }
-
-        layer++;
-    }
-}
-
-void printArray(long long n, long long m, long long** array) {
-    for (long long i = 0; i < n; i++) {
-        for (long long j = 0; j < m; j++) {
-            printf("%4lld", array[i][j]);
+void printPole(int arr[20][20], int N, int M) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            printf("%3d ", arr[i][j]);
         }
         printf("\n");
     }
 }
+void po_chas(int arr[20][20], int N, int M) {
+    int znach = 1;
+    int top = 0, bottom = N - 1;
+    int left = 0, right = M - 1;
+    while (znach <= N * M) {
+        for (int i = left; i <= right && znach <= N * M; i++) {
+            arr[top][i] = znach++;
+        }
+        top++;
+        for (int i = top; i <= bottom && znach <= N * M; i++) {
+            arr[i][right] = znach++;
+        }
+        right--;
+        for (int i = right; i >= left && znach <= N * M; i--) {
+            arr[bottom][i] = znach++;
+        }
+        bottom--;
+        for (int i = bottom; i >= top && znach <= N * M; i--) {
+            arr[i][left] = znach++;
+        }
+        left++;
+    }
+}
+void protiv_chas(int arr[20][20], int N, int M) {
+    int znach = 1;
+    int top = 0, bottom = N - 1;
+    int left = 0, right = M - 1;
+    while (znach <= N * M) {
+        for (int i = right; i >= left && znach <= N * M; i--) {
+            arr[top][i] = znach++;
+        }
+        top++;
+        for (int i = top; i <= bottom && znach <= N * M; i++) {
+            arr[i][left] = znach++;
+        }
+        left++;
 
-int main() {
-    setlocale(LC_ALL, "RUS");
-    long long n, m;
 
-    printf("Введите количество строк (N): ");
-    scanf_s("%lld", &n);
-    printf("Введите количество столбцов (M): ");
-    scanf_s("%lld", &m);
+        for (int i = left; i <= right && znach <= N * M; i++) {
+            arr[bottom][i] = znach++;
+        }
+        bottom--;
 
-    if (n <= 0 || m <= 0) {
-        printf("Размеры массива должны быть положительными числами.\n");
-        return 1;
+
+        for (int i = bottom; i >= top && znach <= N * M; i--) {
+            arr[i][right] = znach++;
+        }
+        right--;
     }
 
-    // Выделяем память для массива
-    long long** array = (long long**)malloc(n * sizeof(long long*));
-    for (long long i = 0; i < n; i++) {
-        array[i] = (long long*)malloc(m * sizeof(long long));
+}
+void protiv_chas_centr(int arr[20][20], int N, int M) {
+    int znach = N * M;
+    int top = 0, bottom = N - 1;
+    int left = 0, right = M - 1;
+
+    //  для одной строки 
+    if (N == 1) {
+        for (int i = right; i >= left; i--) {
+            arr[0][i] = znach--;
+        }
+        return;
     }
 
-    printf("\nВыберите тип спирали:\n");
-    printf("1. Сверху справа по часовой стрелке\n");
-    printf("2. Сверху справа против часовой стрелки\n");
-    printf("3. Из центра по часовой стрелке\n");
-    printf("4. Из центра против часовой стрелки\n");
-    printf("Ваш выбор: ");
-    int choice;
-    scanf_s("%d", &choice);
-
-    if (choice == 1) {
-        fillSpiral(n, m, array);
-        printf("\nМассив, заполненный по часовой спирали:\n");
-    }
-    else if (choice == 2) {
-        fillSpiralFromTopRight(n, m, array);
-        printf("\nМассив, заполненный по спирали против часовой стрелки:\n");
-    }
-    else if (choice == 3) {
-        fillSpiralFromCenter(n, m, array);
-        printf("\nМассив, заполненный спиралью из центра по часовой стрелке:\n");
-    }
-    else if (choice == 4) {
-        fillSpiralFromCenterCounterClockwise(n, m, array);
-        printf("\nМассив, заполненный спиралью из центра против часовой стрелки:\n");
-    }
-    else {
-        printf("Неверный выбор.\n");
-        return 1;
+    //  для одного столбца 
+    if (M == 1) {
+        for (int i = bottom; i >= top; i--) {
+            arr[i][0] = znach--;
+        }
+        return;
     }
 
-    printArray(n, m, array);
 
-    // Освобождаем память
-    for (long long i = 0; i < n; i++) {
-        free(array[i]);
+    while (znach >= 1) {
+        for (int i = left; i <= right && znach >= 1; i++) {
+            arr[top][i] = znach--;
+        }
+        top++;
+        for (int i = top; i <= bottom && znach >= 1; i++) {
+            arr[i][right] = znach--;
+        }
+        right--;
+        for (int i = right; i >= left && znach >= 1; i--) {
+            arr[bottom][i] = znach--;
+        }
+        bottom--;
+        for (int i = bottom; i >= top && znach >= 1; i--) {
+            arr[i][left] = znach--;
+        }
+        left++;
     }
-    free(array);
+}
+void po_chas_centr(int arr[20][20], int N, int M) {
+    int znach = N * M;
+    int top = 0, bottom = N - 1;
+    int left = 0, right = M - 1;
 
+    //  для одной строки 
+    if (N == 1) {
+        for (int i = left; i <= right; i++) {
+            arr[0][i] = znach--;
+        }
+        return;
+    }
+
+    //  для одного столбца 
+    if (M == 1) {
+        for (int i = top; i <= bottom; i++) {
+            arr[i][0] = znach--;
+        }
+        return;
+    }
+
+    while (znach >= 1) {
+        for (int i = right; i >= left && znach >= 1; i--) {
+            arr[top][i] = znach--;
+        }
+        top++;
+        for (int i = top; i <= bottom && znach >= 1; i++) {
+            arr[i][left] = znach--;
+        }
+        left++;
+        for (int i = left; i <= right && znach >= 1; i++) {
+            arr[bottom][i] = znach--;
+        }
+        bottom--;
+        for (int i = bottom; i >= top && znach >= 1; i--) {
+            arr[i][right] = znach--;
+        }
+        right--;
+    }
+}
+
+
+int main()
+{
+    int N = 0, M = 0;
+    char knopka;
+    int flag = 1;
+
+    setlocale(LC_ALL, "");
+
+    while (true) {
+        system("cls");
+        if (flag == 1) {
+            printf("1) Ввести N %d <-- \n", N);
+        }
+        else {
+            printf("1) Ввести N %d \n", N);
+        }if (flag == 2) {
+            printf("2) Ввести M %d <-- \n", M);
+        }
+        else {
+            printf("2) Ввести M %d\n", M);
+        }
+        if (flag == 3) {
+            printf("3) По часовой <-- \n");
+        }
+        else {
+            printf("3) По часовой \n");
+        }
+        if (flag == 4) {
+            printf("4) Против часовой <-- \n");
+        }
+        else {
+            printf("4) Против часовой \n");
+        }
+        if (flag == 5) {
+            printf("5) По часовой с середины <-- \n");
+        }
+        else {
+            printf("5) По часовой с середины \n");
+        }
+        if (flag == 6) {
+            printf("6) Против часовой с середины <-- \n");
+        }
+        else {
+            printf("6) Против часовой с середины \n");
+        }
+        if (flag == 7) {
+            printf("7) Выход <-- \n");
+        }
+        else {
+            printf("7) Выход \n");
+        }
+        knopka = _getch();
+        if (flag == 1 && knopka == 72) {
+            continue;
+        }
+        if (flag == 7 && knopka == 80) {
+            continue;
+        }
+        if (knopka == 80) {
+            flag++;
+        }
+        if (knopka == 72) {
+            flag--;
+        }
+        if (knopka == 27) {
+            exit(0);
+        }
+        if ((knopka == 49) || (knopka == 13 && flag == 1)) {
+            system("cls");
+            printf("Введите N (от 1 до 11): ");
+            if ((scanf_s("%d", &N) != 1) ||  N < 1 || N > 11) {
+                N = 0;
+                printf("Некорректные значения!\n");
+                scanf_s("%*[^\n]");
+                scanf_s("%*c");
+                _getch();
+            }
+        }
+        if ((knopka == 50) || (knopka == 13 && flag == 2)) {
+            system("cls");
+            printf("Введите M (от 1 до 11): ");
+            if ((scanf_s("%d", &M) != 1) || M < 1 || M > 11) {
+                M = 0;
+                printf("Некорректные значения!\n");
+                scanf_s("%*[^\n]");
+                scanf_s("%*c");
+                _getch();
+            }
+        }
+        if ((knopka == 51) || (knopka == 13 && flag == 3)) {
+            if (N > 0 && M > 0) {
+                printf("Поле: \n");
+                int arr[20][20] = { 0 };
+                po_chas(arr, M, N);
+                printPole(arr, M, N);
+                _getch();
+            }
+        }
+        if ((knopka == 52) || (knopka == 13 && flag == 4)) {
+            if (N > 0 && M > 0) {
+                printf("Поле: \n");
+                int arr[20][20] = { 0 };
+                protiv_chas(arr, M, N);
+                printPole(arr, M, N);
+                _getch();
+            }
+        }
+        if ((knopka == 53) || (knopka == 13 && flag == 5)) {
+            if (N > 0 && M > 0) {
+                printf("Поле: \n");
+                int arr[20][20] = { 0 };
+                po_chas_centr(arr, M, N);
+                printPole(arr, M, N);
+                _getch();
+            }
+        }
+        if ((knopka == 54) || (knopka == 13 && flag == 6)) {
+            if (N > 0 && M > 0) {
+                printf("Поле: \n");
+                int arr[20][20] = { 0 };
+                protiv_chas_centr(arr, M, N);
+                printPole(arr, M, N);
+                _getch();
+            }
+        }
+        if ((knopka == 55) || (knopka == 13 && flag == 7)) {
+            exit(0);
+        }
+    }
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#include <stdio.h>
+//#include <stdlib.h>
+//
+//#define _CRT_SECURE_NO_WARNINGS
+//#include <locale.h>
+//
+//void fillSpiral(long long n, long long m, long long** array) {
+//    long long num = 1;
+//    long long top = 0, bottom = n - 1;
+//    long long left = 0, right = m - 1;
+//
+//    while (top <= bottom && left <= right) {
+//        // Заполняем верхнюю строку слева направо
+//        for (long long i = left; i <= right; i++) {
+//            array[top][i] = num++;
+//        }
+//        top++;
+//
+//        // Заполняем правый столбец сверху вниз
+//        for (long long i = top; i <= bottom; i++) {
+//            array[i][right] = num++;
+//        }
+//        right--;
+//
+//        // Заполняем нижнюю строку справа налево
+//        if (top <= bottom) {
+//            for (long long i = right; i >= left; i--) {
+//                array[bottom][i] = num++;
+//            }
+//            bottom--;
+//        }
+//
+//        // Заполняем левый столбец снизу вверх
+//        if (left <= right) {
+//            for (long long i = bottom; i >= top; i--) {
+//                array[i][left] = num++;
+//            }
+//            left++;
+//        }
+//    }
+//}
+//
+//void fillSpiralFromTopRight(long long n, long long m, long long** array) {
+//    long long num = 1;
+//    long long top = 0, bottom = n - 1;
+//    long long left = 0, right = m - 1;
+//
+//    while (top <= bottom && left <= right) {
+//        // Заполняем верхний ряд справа налево
+//        for (long long i = right; i >= left; i--) {
+//            array[top][i] = num++;
+//        }
+//        top++;
+//
+//        // Заполняем левый столбец сверху вниз
+//        for (long long i = top; i <= bottom; i++) {
+//            array[i][left] = num++;
+//        }
+//        left++;
+//
+//        // Заполняем нижний ряд слева направо
+//        if (top <= bottom) {
+//            for (long long i = left; i <= right; i++) {
+//                array[bottom][i] = num++;
+//            }
+//            bottom--;
+//        }
+//
+//        // Заполняем правый столбец снизу вверх
+//        if (left <= right) {
+//            for (long long i = bottom; i >= top; i--) {
+//                array[i][right] = num++;
+//            }
+//            right--;
+//        }
+//    }
+//}
+//
+//void fillSpiralFromCenter(long long n, long long m, long long** array) {
+//    long long num = 1;
+//    long long x = n / 2;
+//    long long y = m / 2;
+//
+//    if (n % 2 == 0) x -= 1;
+//    if (m % 2 == 0) y -= 1;
+//
+//    long long layer = 0;
+//    array[x][y] = num++;
+//
+//    while (layer < (n + m) / 2) {
+//        // Двигаемся вправо
+//        for (long long i = 1; i <= layer * 2 + 1 && y + 1 < m && num <= n * m; i++) {
+//            array[x][++y] = num++;
+//        }
+//
+//        // Двигаемся вниз
+//        for (long long i = 1; i <= layer * 2 + 1 && x + 1 < n && num <= n * m; i++) {
+//            array[++x][y] = num++;
+//        }
+//
+//        // Двигаемся влево
+//        for (long long i = 1; i <= layer * 2 + 2 && y - 1 >= 0 && num <= n * m; i++) {
+//            array[x][--y] = num++;
+//        }
+//
+//        // Двигаемся вверх
+//        for (long long i = 1; i <= layer * 2 + 2 && x - 1 >= 0 && num <= n * m; i++) {
+//            array[--x][y] = num++;
+//        }
+//
+//        layer++;
+//    }
+//}
+//
+//void fillSpiralFromCenterCounterClockwise(long long n, long long m, long long** array) {
+//    long long num = 1;
+//    long long x = n / 2;
+//    long long y = m / 2;
+//
+//    if (n % 2 == 0) x -= 1;
+//    if (m % 2 == 0) y -= 1;
+//
+//    long long layer = 0;
+//    array[x][y] = num++;
+//
+//    while (layer < (n + m) / 2) {
+//        // Двигаемся влево
+//        for (long long i = 1; i <= layer * 2 + 1 && y - 1 >= 0 && num <= n * m; i++) {
+//            array[x][--y] = num++;
+//        }
+//
+//        // Двигаемся вверх
+//        for (long long i = 1; i <= layer * 2 + 1 && x - 1 >= 0 && num <= n * m; i++) {
+//            array[--x][y] = num++;
+//        }
+//
+//        // Двигаемся вправо
+//        for (long long i = 1; i <= layer * 2 + 2 && y + 1 < m && num <= n * m; i++) {
+//            array[x][++y] = num++;
+//        }
+//
+//        // Двигаемся вниз
+//        for (long long i = 1; i <= layer * 2 + 2 && x + 1 < n && num <= n * m; i++) {
+//            array[++x][y] = num++;
+//        }
+//
+//        layer++;
+//    }
+//}
+//
+//void printArray(long long n, long long m, long long** array) {
+//    for (long long i = 0; i < n; i++) {
+//        for (long long j = 0; j < m; j++) {
+//            printf("%4lld", array[i][j]);
+//        }
+//        printf("\n");
+//    }
+//}
+//
+//int main() {
+//    setlocale(LC_ALL, "RUS");
+//    long long n, m;
+//
+//    printf("Введите количество строк (N): ");
+//    scanf_s("%lld", &n);
+//    printf("Введите количество столбцов (M): ");
+//    scanf_s("%lld", &m);
+//
+//    if (n <= 0 || m <= 0) {
+//        printf("Размеры массива должны быть положительными числами.\n");
+//        return 1;
+//    }
+//
+//    // Выделяем память для массива
+//    long long** array = (long long**)malloc(n * sizeof(long long*));
+//    for (long long i = 0; i < n; i++) {
+//        array[i] = (long long*)malloc(m * sizeof(long long));
+//    }
+//
+//    printf("\nВыберите тип спирали:\n");
+//    printf("1. Сверху справа по часовой стрелке\n");
+//    printf("2. Сверху справа против часовой стрелки\n");
+//    printf("3. Из центра по часовой стрелке\n");
+//    printf("4. Из центра против часовой стрелки\n");
+//    printf("Ваш выбор: ");
+//    int choice;
+//    scanf_s("%d", &choice);
+//
+//    if (choice == 1) {
+//        fillSpiral(n, m, array);
+//        printf("\nМассив, заполненный по часовой спирали:\n");
+//    }
+//    else if (choice == 2) {
+//        fillSpiralFromTopRight(n, m, array);
+//        printf("\nМассив, заполненный по спирали против часовой стрелки:\n");
+//    }
+//    else if (choice == 3) {
+//        fillSpiralFromCenter(n, m, array);
+//        printf("\nМассив, заполненный спиралью из центра по часовой стрелке:\n");
+//    }
+//    else if (choice == 4) {
+//        fillSpiralFromCenterCounterClockwise(n, m, array);
+//        printf("\nМассив, заполненный спиралью из центра против часовой стрелки:\n");
+//    }
+//    else {
+//        printf("Неверный выбор.\n");
+//        return 1;
+//    }
+//
+//    printArray(n, m, array);
+//
+//    // Освобождаем память
+//    for (long long i = 0; i < n; i++) {
+//        free(array[i]);
+//    }
+//    free(array);
+//
+//    return 0;
+//}
