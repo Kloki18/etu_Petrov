@@ -1,0 +1,13 @@
+﻿  Kalc.c
+C:\Users\user\Desktop\для C\Kalc\Kalc\Kalc.c(110,12): warning C4477: "printf": в строке форматирования "%lld" требуется аргумент типа "__int64", но вариативный аргумент "1" имеет тип "int"
+      C:\Users\user\Desktop\для C\Kalc\Kalc\Kalc.c(110,12):
+      рекомендуется использовать "%d" в строке форматирования
+      C:\Users\user\Desktop\для C\Kalc\Kalc\Kalc.c(110,12):
+      рекомендуется использовать "%I32d" в строке форматирования
+  
+C:\Users\user\Desktop\для C\Kalc\Kalc\Kalc.c(164,20): warning C4244: функция: преобразование "__int64" в "int", возможна потеря данных
+  Создание кода
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 9 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  Kalc.vcxproj -> C:\Users\user\Desktop\для C\Kalc\Kalc\x64\Release\Kalc.exe
