@@ -10,3 +10,6 @@
 void start_timer();
 void stop_timer();
 void print_time();
+int chislo(int num);
+int schet(int day, int month, int year);
+void Menu();
